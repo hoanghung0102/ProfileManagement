@@ -11,5 +11,8 @@ selenium-debug.log
 .idea
 *.iml
 build.log
+.idea
+*.iml
+build.log
 
 yarn.lock

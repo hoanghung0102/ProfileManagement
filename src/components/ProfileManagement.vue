@@ -32,11 +32,6 @@ export default {
   },
 
   methods: {
-
-    deplayOverLoading () {
-
-    },
-
     redirectProfile () {
       this.$router.push({name: 'Profile'})
     }

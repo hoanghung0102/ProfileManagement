@@ -5,10 +5,21 @@
 
 <script>
 export default {
-  name: 'ProfileManagement',
+  name: 'Profile',
+  components: {},
+  props: {},
   data () {
     return {
       msg: 'Details Profile'
+    }
+  },
+  computed: {},
+  mounted () {
+    this.fetchProfileById()
+  },
+  methods: {
+    fetchProfileById () {
+      this.msg = 'Under Details Profile'
     }
   }
 }

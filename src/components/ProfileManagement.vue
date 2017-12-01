@@ -11,10 +11,26 @@
         a(href="https://gitter.im/vuejs/vue", target="_blank") Gitter Chat
       li
         a(href="https://twitter.com/vuejs", target="_blank") Twitter
+
+    h2.line
     h2 Profile Information
-      ul
-        li(v-for="p in result")
-          button(@click="redirectProfile(p.id)") Details information
+      table.table
+        thead
+          tr
+            th(scope='col') #
+            th(scope='col') Id
+            th(scope='col') Name
+            th(scope='col') Address
+            th(scope='col') Sex
+            th(scope='col') Profile
+        tbody
+          tr(v-for="p in result")
+            th(scope='row') {{ p.id }}
+            td {{ p.name }}
+            td {{ p.address }}
+            td {{ p.sex }}
+            td
+              button(@click="redirectProfile(p.id)") View
 </template>
 
 <script>
@@ -57,6 +73,10 @@
 <style scoped lang="scss">
   h1, h2 {
     font-weight: normal;
+
+    &.line {
+      border-bottom: 1px solid gray;
+    }
   }
 
   ul {

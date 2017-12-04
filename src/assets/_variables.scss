@@ -1,0 +1,19 @@
+// Mobiliar's CI/CD colors
+// Override setting properties of Bootstrap standard
+$red: #da2323;
+$light-red: lighten($red, 30%);
+$light-blue: #70c3d4;
+$boston-blue: darken($light-blue, 20%);
+$dark-blue: #007b9a;
+$light-green: #afcd5f;
+$dark-green: #009d78;
+$light-pink: #f091be;
+$dark-pink: #be0078;
+$light-gray: #dedcd2;
+$dark-gray: #969ba0;
+
+$base-color: $red;
+$text-color: #666666;
+$border-color: #d6d6d6;
+$forecast-color: $dark-green;
+$font-size: 14px;

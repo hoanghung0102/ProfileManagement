@@ -1,41 +1,33 @@
 <template lang="pug">
   .profile-management
     h1 {{ msg }}
+
     h2 Essential Links
     ul
-      li
-        a(href="https://vuejs.org", target="_blank") Core Docs
-      li
-        a(href="https://forum.vuejs.org", target="_blank") Forum
-      li
-        a(href="https://gitter.im/vuejs/vue", target="_blank") Gitter Chat
-      li
-        a(href="https://twitter.com/vuejs", target="_blank") Twitter
+      li(v-for="link in links")
+        a(:href="link[1]", target="_blank") {{ link[0].toUpperCase() }}
 
     h2.line
     h2 Profile Information
-      table.table
-        thead
-          tr
-            th(scope='col') #
-            th(scope='col') Id
-            th(scope='col') Name
-            th(scope='col') Address
-            th(scope='col') Sex
-            th(scope='col') Profile
-        tbody
-          tr(v-for="p in result")
-            th(scope='row') {{ p.id }}
-            td {{ p.name }}
-            td {{ p.address }}
-            td {{ p.sex }}
-            td
-              button(@click="redirectProfile(p.id)") View
+
+    table.table.table-hover
+      thead
+        tr
+          th(v-for="th in ths") {{ th }}
+      tbody
+        tr(v-for="p in result")
+          th(scope='row') {{ p.id }}
+          td {{ p.name }}
+          td {{ p.address }}
+          td {{ p.sex }}
+          td
+            button.btn.btn-primary(@click="redirectProfile(p.id)", type="button") View
 </template>
 
 <script>
   import axios from 'axios'
   import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+  import { profileLabels } from '../constants/profile-constant.js'
 
   export default {
     name: 'ProfileManagement',
@@ -44,7 +36,14 @@
     },
     data () {
       return {
-        msg: 'Welcome to Profile Management Vue2 App',
+        msg: 'Welcome to Profile Management',
+        ths: profileLabels,
+        links: [
+          ['f1', 'https://vuejs.org'],
+          ['f2', 'https://forum.vuejs.org'],
+          ['f3', 'https://gitter.im/vuejs/vue'],
+          ['f4', 'https://twitter.com/vuejs']
+        ],
         result: ''
       }
     },
@@ -57,7 +56,7 @@
       },
 
       fetchAllProfile () {
-        axios.get(`http://localhost:8083/profile-management/person`)
+        axios.get(`http://localhost:8085/profile-management/person/all`)
           .then(({data}) => {
             this.result = data.length && data.map(p => {
               p.sex = p.sex ? 'Female' : 'Male'
@@ -71,11 +70,13 @@
 </script>
 
 <style scoped lang="scss">
+  @import "../assets/variables.scss";
+
   h1, h2 {
     font-weight: normal;
 
     &.line {
-      border-bottom: 1px solid gray;
+      border-bottom: 1px solid $border-color;
     }
   }
 
@@ -90,13 +91,6 @@
       a {
         color: #42b983;
       }
-    }
-
-    button {
-      color: #42b983;
-      cursor: pointer;
-      padding: 5px;
-      border-style: round(50%);
     }
   }
 </style>

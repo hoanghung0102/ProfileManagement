@@ -13,9 +13,10 @@ export default new Router({
       component: ProfileManagement
     },
     {
-      path: '/profile',
+      path: '/profile/:id',
       name: 'Profile',
-      component: Profile
+      component: Profile,
+      props: true
     }
   ]
 })

@@ -31,7 +31,7 @@
     },
     methods: {
       fetchProfileById () {
-        axios.get(`http://localhost:8083/profile-management/${this.endpoint}`, {params: this.params})
+        axios.get(`http://localhost:8085/profile-management/${this.endpoint}`, {params: this.params})
           .then(({data}) => {
             this.msg = JSON.stringify(data, '', 2)
           })

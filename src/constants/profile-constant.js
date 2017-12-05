@@ -1,3 +1,3 @@
 export default {
-  profileLabels: ['#', 'Name', 'Address', 'Sex', 'Profile']
+  profileLabels: ['#', 'Name', 'Address', 'City', 'Sex', 'Profile']
 }

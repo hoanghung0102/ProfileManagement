@@ -7,9 +7,12 @@
         .col-4 {{ result.name }}
       .row
         .col-2 {{ ths[2] }}
-        .col-4 {{ result.address }} {{ result.city }}
+        .col-4 {{ result.address }}
       .row
         .col-2 {{ ths[3] }}
+        .col-4 {{ result.city }}
+      .row
+        .col-2 {{ ths[4] }}
         .col-4 {{ result.sex }}
 </template>
 
@@ -41,6 +44,7 @@
       fetchProfileDetails () {
         axios.get(`http://localhost:8085/profile-management/${this.endpoint}`, {params: { id: this.id }})
           .then(({data}) => { this.result = data })
+          .catch(err => err.throwError)
       }
     }
   }

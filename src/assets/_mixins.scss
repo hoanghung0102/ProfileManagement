@@ -1,0 +1,36 @@
+@import "variables";
+
+@mixin align-middle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+@mixin align-vertical {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin break-word {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+@mixin text-truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin radio-and-checkbox-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #BFC3C6;
+  position: relative;
+  margin-top: 4px;
+  margin-left: 0;
+}

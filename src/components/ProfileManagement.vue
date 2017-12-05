@@ -2,7 +2,7 @@
   .profile-management
     h1 {{ msg }}
 
-    h2 Essential Links
+    h4 Essential Links
     ul
       li(v-for="link in links")
         a(:href="link[1]", target="_blank") {{ link[0].toUpperCase() }}
@@ -15,8 +15,8 @@
         tr
           th(v-for="th in ths") {{ th }}
       tbody
-        tr(v-for="p in result")
-          th(scope="row") {{ p.id }}
+        tr(v-for="(p, index) in result")
+          th(scope="row") {{ index + 1 }}
           td
             router-link(:to="{name: 'Profile', params: {id: p.id.toString()}}") {{ p.name }}
           td {{ p.address }}
@@ -26,24 +26,10 @@
             button.btn.btn-primary(@click="onEdit(p.id)", type="button") Edit
             button.btn.btn-primary(@click="onDelete(p.id)", type="button") Delete
 
-        tr.newProfile(:style="{display: displayRowAddPerson}")
-          th(scope="row") {{ idIncrement }}
-          td
-            .input-group
-              input.form-control(type="text", placeholder="Name")
-          td
-            .input-group
-              input.form-control(type="text", placeholder="Address")
-          td
-            .input-group
-              input.form-control(type="text", placeholder="City")
-          td
-            .input-group
-              input.form-control(type="text", placeholder="Sex")
-          td
-            button.btn.btn-primary.save(@click="savePersons()", type="button") Save
+        template(v-for="(person, index) in persons")
+          add-profile(:index="(idIncrement + index).toString()")
 
-    button.btn.btn-primary.add(@click="addNewPerson()", type="button") Add
+    button.btn.btn-primary.add(@click="persons.push(0)", type="button") Add
     button.btn.btn-primary.saveAll(@click="savePersons()", type="button") Save All
 </template>
 
@@ -51,11 +37,13 @@
   import axios from 'axios'
   import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
   import profileConsts from '../constants/profile-constant.js'
+  import AddProfile from './AddProfile.vue'
 
   export default {
     name: 'ProfileManagement',
     components: {
-      PulseLoader
+      PulseLoader,
+      AddProfile
     },
     data () {
       return {
@@ -68,7 +56,7 @@
           ['f4', 'https://twitter.com/vuejs']
         ],
         result: '',
-        isDisplayRowAddPerson: false
+        persons: []
       }
     },
     created () {
@@ -76,18 +64,10 @@
     },
     computed: {
       idIncrement () {
-        return this.result.length ? [...this.result].pop().id + 1 : 1
-      },
-      displayRowAddPerson () {
-        return this.isDisplayRowAddPerson ? 'display' : 'none'
+        return this.result.length ? this.result.length + 1 : 1
       }
     },
     methods: {
-      addNewPerson () {
-        this.isDisplayRowAddPerson = true
-        console.log('this.displayRowAddPerson= ', this.displayRowAddPerson)
-      },
-
       savePersons () {},
 
       onEdit (id) {},

@@ -30,6 +30,16 @@ export default {
 
   button {
     cursor: pointer;
+
+    &.btn {
+      width: 70px;
+      padding: 0 15px;
+      margin: 2px;
+    }
+  }
+
+  h2.line {
+    border-bottom: 1px solid $border-color;
   }
 </style>
 
@@ -41,5 +51,9 @@ export default {
     min-height: calc(100vh - 50px);
     padding: 50px 10px;
     background-color: #f4fbf5;
+
+    .row.footer {
+      margin-top: 10px;
+    }
   }
 </style>

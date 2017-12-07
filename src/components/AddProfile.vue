@@ -3,18 +3,19 @@
     th(scope="row") {{ index }}
     td
       .input-group
-        input.form-control(type="text", :placeholder="ths[1]", v-model="person.name")
+        input.form-control(type="text", :placeholder="ths[1]", v-model="person.name", name="name")
     td
       .input-group
-        input.form-control(type="text", :placeholder="ths[2]", v-model="person.address")
+        input.form-control(type="text", :placeholder="ths[2]", v-model="person.address", name="address")
     td
       .input-group
-        select.form-control(width="30%", v-model="person.city")
+        select.form-control(width="30%", v-model="person.city", name="city")
           option Ha Noi
           option Vinh
           option Hue
           option DN
           option HCM
+          option Abroad
     td
       .input-group
         .form-check
@@ -26,13 +27,13 @@
             input#female.form-check-input(type="radio", :name="index.concat('sex')", value="false", v-model="person.sex")
             | Female
     td
-      button.btn.btn-primary.save(@click="savePersons()", type="button") Save
+      button.btn.btn-primary.save(@click="savePerson()", type="button") Save
       button.btn.btn-primary.delete(@click="deleteRow()", type="button") Delete
 </template>
 
 <script>
-  import axios from 'axios'
   import profileConsts from '../constants/profile-constant.js'
+  import axios from 'axios'
 
   export default {
     name: 'Profile',
@@ -50,10 +51,13 @@
     created () {},
     mounted () {},
     methods: {
-      savePersons () {
-        axios.post(`http://localhost:8085/profile-management/person/save`, { params: this.person })
-          .then(this.msgInfo = 'Save successfully')
-          .catch(err => err.throwError)
+      savePerson () {
+        axios.post(`http://localhost:8085/profile-management/person/save`, this.person)
+          .then(() => {
+            this.msgInfo = 'Save successfully'
+            console.log(this.msgInfo)
+          })
+          .catch(err => err.throw())
       },
 
       deleteRow () {

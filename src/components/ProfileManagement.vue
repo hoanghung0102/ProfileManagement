@@ -17,14 +17,46 @@
       tbody
         tr(v-for="(p, index) in result")
           th(scope="row") {{ index + 1 }}
-          td
-            router-link(:to="{name: 'Profile', params: {id: p.id.toString()}}") {{ p.name }}
-          td {{ p.address }}
-          td {{ p.city }}
-          td {{ p.sex }}
-          td
-            button.btn.btn-primary(@click="onEdit(p.id)", type="button") Edit
-            button.btn.btn-primary(@click="onDelete(p.id)", type="button") Delete
+          template(v-if="!isClickEdit")
+            td
+              router-link(:to="{name: 'Profile', params: {id: p.id.toString()}}") {{ p.name }}
+            td {{ p.address }}
+            td {{ p.city }}
+            td {{ p.sex }}
+            td
+              button.btn.btn-primary(@click="isClickEdit = true", type="button") Edit
+              button.btn.btn-primary(@click="onDelete(p.id)", type="button") Delete
+
+          template(v-else)
+            td
+              .input-group
+                input.form-control(type="text", :placeholder="ths[1]", v-model="person.name", name="name")
+            td
+              .input-group
+                input.form-control(type="text", :placeholder="ths[2]", v-model="person.address", name="address")
+            td
+              .input-group
+                select.form-control(width="30%", v-model="person.city", name="city")
+                  option Ha Noi
+                  option Vinh
+                  option Hue
+                  option DN
+                  option HCM
+                  option Abroad
+            td
+              .input-group
+                .form-check
+                  label.form-check-label
+                    input#male.form-check-input(type="radio", :name="index.toString().concat('sex')", value="true", checked="", v-model="person.sex")
+                    | Male
+                .form-check
+                  label.form-check-label
+                    input#female.form-check-input(type="radio", :name="index.toString().concat('sex')", value="false", v-model="person.sex")
+                    | Female
+            td
+              input.form-control(type="hidden", v-model="person.address", name="id")
+              button.btn.btn-primary.save(@click="updatePerson()", type="button") Save
+              button.btn.btn-primary(@click="onDelete(p.id)", type="button") Delete
 
         template(v-for="(person, index) in persons")
           add-profile(:index="(idIncrement + index).toString()")
@@ -47,7 +79,7 @@
     },
     data () {
       return {
-        msg: 'Welcome to Profile Management',
+        msg: 'Family Tree',
         ths: profileConsts.profileLabels,
         links: [
           ['f1', 'https://vuejs.org'],
@@ -56,7 +88,9 @@
           ['f4', 'https://twitter.com/vuejs']
         ],
         result: '',
-        persons: []
+        persons: [],
+        person: {},
+        isClickEdit: false
       }
     },
     created () {
@@ -68,9 +102,14 @@
       }
     },
     methods: {
-      savePersons () {},
-
-      onEdit (id) {},
+      updatePerson () {
+        axios.patch(`http://localhost:8085/profile-management/person/update`, this.person)
+          .then(() => {
+            this.msgInfo = 'Save successfully'
+            console.log(this.msgInfo)
+          })
+          .catch(err => err.throw())
+      },
 
       onDelete (id) {
         axios.delete(`http://localhost:8085/profile-management/person/delete`, {params: {id: id}})
@@ -86,7 +125,7 @@
               return p
             })
           })
-          .catch(err => err.throwError)
+          .catch(err => err.throw())
       }
     }
 }

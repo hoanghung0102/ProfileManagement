@@ -30,10 +30,10 @@
           template(v-else)
             td
               .input-group
-                input.form-control(type="text", :placeholder="ths[1]", v-model="person.name", name="name")
+                input.form-control(type="text", :placeholder="ths[1]", v-model="person.name", name="name", :value="p.name")
             td
               .input-group
-                input.form-control(type="text", :placeholder="ths[2]", v-model="person.address", name="address")
+                input.form-control(type="text", :placeholder="ths[2]", v-model="person.address", name="address", value="p.name")
             td
               .input-group
                 select.form-control(width="30%", v-model="person.city", name="city")
@@ -156,5 +156,11 @@
     &.add, &.saveAll {
       width: 90px;
     }
+  }
+</style>
+
+<style lang="scss">
+  .form-check :first-child {
+    margin-right: 4px;
   }
 </style>

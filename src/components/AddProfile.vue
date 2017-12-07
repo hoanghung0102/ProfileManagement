@@ -68,7 +68,4 @@
 </script>
 
 <style scoped lang="scss">
-  .form-check :first-child {
-    margin-right: 4px;
-  }
 </style>

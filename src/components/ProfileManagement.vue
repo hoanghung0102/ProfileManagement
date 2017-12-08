@@ -30,10 +30,10 @@
           template(v-else)
             td
               .input-group
-                input.form-control(type="text", :placeholder="ths[1]", v-model="person.name", name="name", :value="p.name")
+                input.form-control(type="text", :placeholder="ths[1]", v-model="person.name", name="name", value="AAAAAA")
             td
               .input-group
-                input.form-control(type="text", :placeholder="ths[2]", v-model="person.address", name="address", value="p.name")
+                input.form-control(type="text", :placeholder="ths[2]", v-model="person.address", name="address", value="ddddd")
             td
               .input-group
                 select.form-control(width="30%", v-model="person.city", name="city")
@@ -79,7 +79,7 @@
     },
     data () {
       return {
-        msg: 'Family Tree',
+        msg: 'My Family',
         ths: profileConsts.profileLabels,
         links: [
           ['f1', 'https://vuejs.org'],
@@ -113,7 +113,10 @@
 
       onDelete (id) {
         axios.delete(`http://localhost:8085/profile-management/person/delete`, {params: {id: id}})
-          .then(this.fetchAllProfile())
+          .then(
+            this.result = this.result.filter(function (obj) {
+              return obj.id !== id
+            }))
           .catch(err => err.throwError)
       },
 
@@ -155,6 +158,12 @@
   button {
     &.add, &.saveAll {
       width: 90px;
+    }
+  }
+
+  .table tr:last-child {
+    th, td {
+      border-bottom: 1px solid #eceeef;
     }
   }
 </style>

@@ -15,51 +15,11 @@
         tr
           th(v-for="th in ths") {{ th }}
       tbody
-        tr(v-for="(p, index) in result")
-          th(scope="row") {{ index + 1 }}
-          template(v-if="!isClickEdit")
-            td
-              router-link(:to="{name: 'Profile', params: {id: p.id.toString()}}") {{ p.name }}
-            td {{ p.address }}
-            td {{ p.city }}
-            td {{ p.sex }}
-            td
-              button.btn.btn-primary(@click="isClickEdit = true", type="button") Edit
-              button.btn.btn-primary(@click="onDelete(p.id)", type="button") Delete
-
-          template(v-else)
-            td
-              .input-group
-                input.form-control(type="text", :placeholder="ths[1]", v-model="person.name", name="name", value="AAAAAA")
-            td
-              .input-group
-                input.form-control(type="text", :placeholder="ths[2]", v-model="person.address", name="address", value="ddddd")
-            td
-              .input-group
-                select.form-control(width="30%", v-model="person.city", name="city")
-                  option Ha Noi
-                  option Vinh
-                  option Hue
-                  option DN
-                  option HCM
-                  option Abroad
-            td
-              .input-group
-                .form-check
-                  label.form-check-label
-                    input#male.form-check-input(type="radio", :name="index.toString().concat('sex')", value="true", checked="", v-model="person.sex")
-                    | Male
-                .form-check
-                  label.form-check-label
-                    input#female.form-check-input(type="radio", :name="index.toString().concat('sex')", value="false", v-model="person.sex")
-                    | Female
-            td
-              input.form-control(type="hidden", v-model="person.address", name="id")
-              button.btn.btn-primary.save(@click="updatePerson()", type="button") Save
-              button.btn.btn-primary(@click="onDelete(p.id)", type="button") Delete
+        template(v-for="(p, index) in result")
+          r-u-profile(:index="(index + 1).toString()", :persons="result", :person="p", @updatePersons="updatePersons")
 
         template(v-for="(person, index) in persons")
-          add-profile(:index="(idIncrement + index).toString()", :persons="result", @update="updatePersons")
+          add-profile(:index="(idIncrement + index).toString()", :persons="result", @updatePersons="updatePersons")
 
     button.btn.btn-primary.add(@click="persons.push(0)", type="button") Add
     button.btn.btn-primary.saveAll(@click="savePersons()", type="button") Save All
@@ -70,12 +30,14 @@
   import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
   import profileConsts from '../constants/profile-constant.js'
   import AddProfile from './AddProfile.vue'
+  import RUProfile from './RUProfile.vue'
 
   export default {
     name: 'ProfileManagement',
     components: {
       PulseLoader,
-      AddProfile
+      AddProfile,
+      RUProfile
     },
     data () {
       return {
@@ -133,6 +95,7 @@
 
       updatePersons () {
         this.fetchAllProfile()
+        console.log('trigger')
       }
     }
 }

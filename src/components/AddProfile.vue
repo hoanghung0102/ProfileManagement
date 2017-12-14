@@ -40,7 +40,7 @@
     components: {},
     props: {
       index: String,
-      result: ''
+      persons: ''
     },
     data: () => ({
       ths: profileConsts.profileLabels,
@@ -57,7 +57,7 @@
           .then(() => {
             this.msgInfo = 'Save successfully'
             // trigger method in the parents
-            this.$emit('update')
+            this.$emit('updatePersons')
           })
           .catch(err => err.throw())
       },

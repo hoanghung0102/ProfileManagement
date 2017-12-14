@@ -39,7 +39,8 @@
     name: 'Profile',
     components: {},
     props: {
-      index: String
+      index: String,
+      result: ''
     },
     data: () => ({
       ths: profileConsts.profileLabels,
@@ -55,7 +56,8 @@
         axios.post(`http://localhost:8085/profile-management/person/save`, this.person)
           .then(() => {
             this.msgInfo = 'Save successfully'
-            console.log(this.msgInfo)
+            // trigger method in the parents
+            this.$emit('update')
           })
           .catch(err => err.throw())
       },

@@ -59,7 +59,7 @@
               button.btn.btn-primary(@click="onDelete(p.id)", type="button") Delete
 
         template(v-for="(person, index) in persons")
-          add-profile(:index="(idIncrement + index).toString()")
+          add-profile(:index="(idIncrement + index).toString()", :persons="result", @update="updatePersons")
 
     button.btn.btn-primary.add(@click="persons.push(0)", type="button") Add
     button.btn.btn-primary.saveAll(@click="savePersons()", type="button") Save All
@@ -129,6 +129,10 @@
             })
           })
           .catch(err => err.throw())
+      },
+
+      updatePersons () {
+        this.fetchAllProfile()
       }
     }
 }

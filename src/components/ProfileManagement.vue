@@ -64,38 +64,17 @@
       }
     },
     methods: {
-      updatePerson () {
-        axios.patch(`http://localhost:8085/profile-management/person/update`, this.person)
-          .then(() => {
-            this.msgInfo = 'Save successfully'
-            console.log(this.msgInfo)
-          })
-          .catch(err => err.throw())
-      },
-
-      onDelete (id) {
-        axios.delete(`http://localhost:8085/profile-management/person/delete`, {params: {id: id}})
-          .then(
-            this.result = this.result.filter(function (obj) {
-              return obj.id !== id
-            }))
-          .catch(err => err.throwError)
-      },
-
       fetchAllProfile () {
         axios.get(`http://localhost:8085/profile-management/person/all`)
           .then(({data}) => {
-            this.result = data.length && data.map(p => {
-              p.sex = p.sex ? 'Female' : 'Male'
-              return p
-            })
+            this.result = data
           })
           .catch(err => err.throw())
       },
 
-      updatePersons () {
+      updatePersons (msgInfo) {
         this.fetchAllProfile()
-        console.log('trigger')
+        console.log(msgInfo)
       }
     }
 }

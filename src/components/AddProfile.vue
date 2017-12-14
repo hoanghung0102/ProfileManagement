@@ -10,12 +10,12 @@
     td
       .input-group
         select.form-control(width="30%", v-model="person.city", name="city")
-          option Ha Noi
-          option Vinh
-          option Hue
-          option DN
-          option HCM
-          option Abroad
+          option(value="Ha Noi") Ha Noi
+          option(value="Vinh") Vinh
+          option(value="Hue") Hue
+          option(value="Da Nang") Da Nang
+          option(value="Sai Gon") Sai Gon
+          option(value="Abroad") Abroad
     td
       .input-group
         .form-check
@@ -57,7 +57,7 @@
           .then(() => {
             this.msgInfo = 'Save successfully'
             // trigger method in the parents
-            this.$emit('updatePersons')
+            this.$emit('updatePersons', 'Adding person successful')
           })
           .catch(err => err.throw())
       },

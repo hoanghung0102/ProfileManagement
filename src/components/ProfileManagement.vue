@@ -16,12 +16,12 @@
           th(v-for="th in ths") {{ th }}
       tbody
         template(v-for="(p, index) in result")
-          r-u-profile(:index="(index + 1).toString()", :persons="result", :person="p", @updatePersons="updatePersons")
+          r-u-profile(:index="(index + 1).toString()", :person="p", @updatePerson="updatePersons")
 
-        template(v-for="(person, index) in persons")
-          add-profile(:index="(idIncrement + index).toString()", :persons="result", @updatePersons="updatePersons")
+        template
+          add-profile(:index="idIncrement.toString()", @updatePerson="updatePersons", :isAppearRow="isClickAdd")
 
-    button.btn.btn-primary.add(@click="persons.push(0)", type="button") Add
+    button.btn.btn-primary.add(@click="addNewPerson()", type="button") Add
     button.btn.btn-primary.saveAll(@click="savePersons()", type="button") Save All
 </template>
 
@@ -29,8 +29,8 @@
   import axios from 'axios'
   import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
   import profileConsts from '../constants/profile-constant.js'
-  import AddProfile from './AddProfile.vue'
-  import RUProfile from './RUProfile.vue'
+  import AddProfile from '../components/AddProfile.vue'
+  import RUProfile from '../components/RUProfile.vue'
 
   export default {
     name: 'ProfileManagement',
@@ -50,9 +50,9 @@
           ['f4', 'https://twitter.com/vuejs']
         ],
         result: '',
-        persons: [],
         person: {},
-        isClickEdit: false
+        isClickEdit: false,
+        isClickAdd: false
       }
     },
     created () {
@@ -68,16 +68,26 @@
         axios.get(`http://localhost:8085/profile-management/person/all`)
           .then(({data}) => {
             this.result = data
+              .map(a => {
+                a.hasEdit = false
+                return a
+              })
+              .sort((a, b) => a.id - b.id)
           })
           .catch(err => err.throw())
       },
 
-      updatePersons (msgInfo) {
+      updatePersons (fbData) {
         this.fetchAllProfile()
-        console.log(msgInfo)
+        // if (fbData.isAddNewPerson) this.isClickAdd = false
+        console.log('isClickAdd:= ', this.isClickAdd)
+      },
+
+      addNewPerson () {
+        this.isClickAdd = true
       }
     }
-}
+  }
 </script>
 
 <style scoped lang="scss">

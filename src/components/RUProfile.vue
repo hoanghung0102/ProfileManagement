@@ -28,14 +28,14 @@
               input#female.form-check-input(type="radio", :name="index.toString().concat('sex')", value="false", v-model="person.sex")
               | Female
       td
-        input.form-control(type="hidden", v-model="person.id", name="id")
+        input.form-control(type="hidden", v-model="person.hasEdit")
         button.btn.btn-primary.save(@click="updatePerson()", type="button") Save
         button.btn.btn-primary(@click="onDelete(person.id)", type="button") Delete
 
     template(v-else)
       td
-        router-link(:to="{name: 'Profile', params: {id: person.id.toString()}}") {{ person.name }}s
-      td {{ person.address }}
+        router-link(:to="{name: 'Profile', params: {id: person.id.toString()}}") {{ person.name }}
+      td.hideText.text-truncate(v-tooltip:top="person.address") {{ person.address }}
       td {{ person.city }}
       td {{ person.sex ? 'Male' : 'Female' }}
       td
@@ -44,16 +44,16 @@
 </template>
 
 <script>
+  import { ToolTipable } from '../customdirective/tooltip-directive.js'
   import profileConsts from '../constants/profile-constant.js'
   import axios from 'axios'
 
   export default {
-    name: 'Profile',
+    name: 'RUProfile',
     components: {},
     props: {
       index: String,
-      person: Object,
-      persons: ''
+      person: Object
     },
     data: () => ({
       ths: profileConsts.profileLabels,
@@ -62,13 +62,16 @@
     computed: {},
     created () {},
     mounted () {},
+    directives: {
+      ToolTipable
+    },
     methods: {
       updatePerson () {
-        console.log(this.person)
         axios.patch(`http://localhost:8085/profile-management/person/update`, this.person)
           .then(() => {
             // trigger method in the parents
-            this.$emit('updatePersons', 'Update person successful')
+            this.$emit('updatePersons', { msg: 'Update person successful', isAddNewPerson: false })
+            this.isClickEdit = false
           })
           .catch(err => err.throw())
       },
@@ -77,7 +80,7 @@
         axios.delete(`http://localhost:8085/profile-management/person/delete`, {params: {id: id}})
           .then(() => {
             // trigger method in the parents
-            this.$emit('updatePersons', 'Delete person successful')
+            this.$emit('updatePersons', { msg: 'Delete person successful', isAddNewPerson: false })
           })
           .catch(err => err.throwError)
       }
@@ -86,7 +89,13 @@
 </script>
 
 <style scoped lang="scss">
-  .ReadAndUpdateProfile {
+  @import "../assets/mixins.scss";
 
+  .ReadAndUpdateProfile {
+    .hideText {
+       max-width: 250px;
+     }
+
+    @include text-truncate
   }
 </style>

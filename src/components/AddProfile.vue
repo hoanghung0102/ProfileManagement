@@ -40,13 +40,12 @@
     components: {},
     props: {
       index: String,
-      persons: ''
+      isAppearRow: true
     },
     data: () => ({
       ths: profileConsts.profileLabels,
       msgInfo: '',
-      person: { id: '', name: '', address: '', city: 'Ha Noi', sex: true },
-      isAppearRow: true
+      person: { id: '', name: '', address: '', city: 'Ha Noi', sex: true }
     }),
     computed: {},
     created () {},
@@ -57,7 +56,8 @@
           .then(() => {
             this.msgInfo = 'Save successfully'
             // trigger method in the parents
-            this.$emit('updatePersons', 'Adding person successful')
+            this.$emit('updatePersons', { msg: 'Adding person successful', isAddNewPerson: true })
+            this.isAppearRow = false
           })
           .catch(err => err.throw())
       },

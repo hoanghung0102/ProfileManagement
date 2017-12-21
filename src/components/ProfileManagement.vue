@@ -1,11 +1,17 @@
 <template lang="pug">
   .profile-management
-    h1 {{ msg }}
+    .main-header
+      .header-left
+        h1 {{ msg }}
 
-    h4 Essential Links
-    ul
-      li(v-for="link in links")
-        a(:href="link[1]", target="_blank") {{ link[0].toUpperCase() }}
+        h4 Essential Links
+        ul
+          li(v-for="link in links")
+            a(:href="link[1]", target="_blank") {{ link[0].toUpperCase() }}
+
+      .header-right
+        a(href="#")
+          .home-image
 
     h2.line
     h2 Profile Information
@@ -127,5 +133,27 @@
 <style lang="scss">
   .form-check :first-child {
     margin-right: 4px;
+  }
+
+  .main-header {
+    display: flex;
+    width: 100%;
+    margin-bottom: 5px;
+
+    .header-left {
+      align-items: flex-start;
+      flex-grow: 1
+    }
+
+    .header-right {
+      align-items: flex-end;
+
+      .home-image {
+        border: 1px solid #42b983;
+        width: 200px;
+        height: 100px;
+        background-color: #f7f7f9;
+      }
+    }
   }
 </style>

@@ -45,7 +45,7 @@
     data: () => ({
       ths: profileConsts.profileLabels,
       msgInfo: '',
-      person: { id: '', name: '', address: '', city: 'Ha Noi', sex: true }
+      person: { id: '', name: '', address: '', city: 'Ha Noi', sex: true, age: 9 }
     }),
     computed: {},
     created () {},

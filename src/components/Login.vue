@@ -40,7 +40,9 @@
               this.$router.push('/home')
             }
           })
-          .catch(err => err.throw())
+          .catch((err) => {
+            err.throw()
+          })
       }
     }
   }

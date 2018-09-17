@@ -44,7 +44,7 @@
       fetchProfileDetails () {
         axios.get(`http://localhost:8085/profile-management/${this.endpoint}`, {params: { id: this.id }})
           .then(({data}) => { this.result = data })
-          .catch(err => err.throw())
+          .catch(err => console.log(err.response))
       }
     }
   }

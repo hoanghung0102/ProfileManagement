@@ -73,7 +73,7 @@
             this.$emit('updatePersons', { msg: 'Update person successful', isAddNewPerson: false })
             this.isClickEdit = false
           })
-          .catch(err => err.throw())
+          .catch(err => console.log(err.response))
       },
 
       onDelete (id) {
@@ -82,7 +82,7 @@
             // trigger method in the parents
             this.$emit('updatePersons', { msg: 'Delete person successful', isAddNewPerson: false })
           })
-          .catch(err => err.throwError)
+          .catch(err => console.log(err.response))
       }
     }
   }

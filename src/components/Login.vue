@@ -34,14 +34,14 @@
     mounted () {},
     methods: {
       reqLogin () {
-        axios.post(`http://localhost:8085/profile-management/${this.endpoint}`, this.params)
+        axios.post(`http://localhost:8085/profile-management/${this.endpoint}`, JSON.stringify(this.params))
           .then(({data}) => {
             if (data) {
               this.$router.push('/home')
             }
           })
           .catch((err) => {
-            err.throw()
+            console.log(err.response)
           })
       }
     }

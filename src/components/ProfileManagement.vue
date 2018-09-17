@@ -50,10 +50,10 @@
         msg: 'My Family',
         ths: profileConsts.profileLabels,
         links: [
-          ['f1', 'https://vuejs.org'],
-          ['f2', 'https://forum.vuejs.org'],
-          ['f3', 'https://gitter.im/vuejs/vue'],
-          ['f4', 'https://twitter.com/vuejs']
+          // ['f1', 'https://vuejs.org'],
+          // ['f2', 'https://forum.vuejs.org'],
+          // ['f3', 'https://gitter.im/vuejs/vue'],
+          // ['f4', 'https://twitter.com/vuejs']
         ],
         result: '',
         person: {},
@@ -80,7 +80,7 @@
               })
               .sort((a, b) => a.id - b.id)
           })
-          .catch(err => err.throw())
+          .catch(err => console.log(err.response))
       },
 
       updatePersons (fbData) {

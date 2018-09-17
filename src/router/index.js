@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import ProfileManagement from '@/components/ProfileManagement'
 import Profile from '@/components/Profile'
 import Login from '@/components/Login'
+import OngNoi from '@/components/InheriAttributes/OngNoi'
 
 Vue.use(Router)
 
@@ -26,6 +27,12 @@ export default new Router({
       path: '/profile/:id',
       name: 'Profile',
       component: Profile,
+      props: true
+    },
+    {
+      path: '/ongnoi',
+      name: 'OngNoi',
+      component: OngNoi,
       props: true
     }
   ]

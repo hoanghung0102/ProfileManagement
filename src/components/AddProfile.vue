@@ -59,7 +59,7 @@
             this.$emit('updatePersons', { msg: 'Adding person successful', isAddNewPerson: true })
             this.isAppearRow = false
           })
-          .catch(err => err.throw())
+          .catch(err => console.log(err.response))
       },
 
       deleteRow () {

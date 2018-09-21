@@ -3,18 +3,19 @@
     h1 {{ title }}
     h2.line
 
-    form(v-on:submit.prevent="reqLogin")
-      .form-group.row
-        label.col-sm-2.col-form-label(for='username') Username
-        .col-sm-10
-          input#inputEmail3.form-control(required, placeholder='Username', v-model="params.username")
-      .form-group.row
-        label.col-sm-2.col-form-label(for='password') Password
-        .col-sm-10
-          input#inputPassword3.form-control(required, placeholder='Password', v-model="params.password", type="password")
-      .form-group.row
-        .offset-sm-2.col-sm-10
-          button.btn.btn-primary(type='submit') Sign in
+    div.shadow.border-form
+      form(v-on:submit.prevent="reqLogin")
+        .form-group.row
+          label.col-sm-2.col-form-label(for='username') Username
+          .col-sm-10
+            input#inputEmail3.form-control(required, placeholder='Username', v-model="params.username")
+        .form-group.row
+          label.col-sm-2.col-form-label(for='password') Password
+          .col-sm-10
+            input#inputPassword3.form-control(required, placeholder='Password', v-model="params.password", type="password")
+        .form-group.row
+          .offset-sm-2.col-sm-10
+            button.btn.btn-primary(type='submit') Sign in
 </template>
 
 <script>
@@ -34,10 +35,17 @@
     mounted () {},
     methods: {
       reqLogin () {
-        axios.post(`http://localhost:8085/profile-management/${this.endpoint}`, JSON.stringify(this.params))
+        axios.post(`http://localhost:8085/profile-management/${this.endpoint}`, JSON.stringify(this.params),
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
           .then(({data}) => {
             if (data) {
               this.$router.push('/home')
+            } else {
+              this.$router.push('/')
             }
           })
           .catch((err) => {
@@ -56,6 +64,13 @@
   form {
     margin: 20px 0 20px 20px;
     width: 80%;
+  }
+
+  .border-form {
+    border: 1px solid #b198ca44;
+    border-radius: 5px;
+    background: #eaedf1;
+    box-shadow: 6px 6px 5px #888;
   }
 
   .btn {

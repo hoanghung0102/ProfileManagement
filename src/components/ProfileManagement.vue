@@ -4,7 +4,6 @@
       .header-left
         h1 {{ msg }}
 
-        h4 Essential Links
         ul
           li(v-for="link in links")
             a(:href="link[1]", target="_blank") {{ link[0].toUpperCase() }}
@@ -47,7 +46,7 @@
     },
     data () {
       return {
-        msg: 'My Family',
+        msg: 'Sale Assistance',
         ths: profileConsts.profileLabels,
         links: [
           // ['f1', 'https://vuejs.org'],

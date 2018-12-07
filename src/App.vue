@@ -2,16 +2,18 @@
   #app
     .container
       router-view
-
       .row.footer
         .col
           .footer-text &copy; Vue 2 - {{ new Date().toDateString() }}
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  import Navigator from './components/navigator/Navigator.vue'
+
+  export default {
+    name: 'app',
+    component: {Navigator}
+  }
 </script>
 
 <!--Global setting for application-->

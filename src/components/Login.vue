@@ -4,6 +4,8 @@
     h2.line
 
     div.shadow.border-form
+      div.error-msg(v-show="errMsg")
+        span {{ errMsg }}
       form(v-on:submit.prevent="reqLogin")
         .form-group.row
           label.col-sm-2.col-form-label(for='username') Username
@@ -28,7 +30,8 @@
       title: 'Login',
       endpoint: 'login',
       result: '',
-      params: {username: '', password: ''}
+      params: {username: '', password: ''},
+      errMsg: ''
     }),
     computed: {},
     created () {},
@@ -45,7 +48,7 @@
             if (data) {
               this.$router.push('/home')
             } else {
-              this.$router.push('/')
+              this.$router.push({path: '/login', params: {errMsg: this.errMsg}})
             }
           })
           .catch((err) => {
@@ -71,6 +74,11 @@
     border-radius: 5px;
     background: #eaedf1;
     box-shadow: 6px 6px 5px #888;
+  }
+
+  .error-msg {
+    color: red;
+    text-align: left;
   }
 
   .btn {
